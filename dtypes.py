@@ -4,6 +4,7 @@ from typing import TypedDict
 class GroupInfo(TypedDict):
     tg_chat_id: int
     group_id: int
+    description: str
 
 
 class BetResult(TypedDict):

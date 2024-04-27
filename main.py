@@ -1,10 +1,9 @@
-# import asyncio
 import math
 from logging import warning
 from os import environ
 
 from openai import AsyncOpenAI
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyParameters
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from dotenv import load_dotenv
 from telegram.ext import Application, CommandHandler, CallbackContext, CallbackQueryHandler, PollAnswerHandler
 
@@ -63,6 +62,7 @@ async def suggest(update: Update, _: CallbackContext) -> None:
     suggestion = update.message.text.replace("/suggest", "").strip("")
     if suggestion == "":
         await update.message.reply_text('Nessun suggerimento ricevuto. Utilizzo: /suggest {suggerimento}')
+        return
 
     group.suggest(suggestion)
 
@@ -196,7 +196,7 @@ async def close(update: Update, _: CallbackContext) -> None:
     msg = ''
     for res in result:
         win = res['win']
-        tk = res['token']
+        tk = res['tokens']
         verb = 'ha vinto' if res['win'] > 0 else 'ha perso'
         msg += f'{res["member_name"]} {verb} {math.fabs(win):0} token. {tk} tokens rimanenti.\n'
 

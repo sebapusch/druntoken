@@ -24,23 +24,24 @@ class Group:
                 raise ValueError(f'Group does not exist.')
             connection = connect(db_path)
 
-        group_info = connection.execute('SELECT id, tg_id FROM group_info').fetchone()
+        group_info = connection.execute('SELECT id, tg_id, description FROM group_info').fetchone()
 
         self.connection = connection
         self.group_info: GroupInfo = {
             'group_id': group_info[0],
             'tg_chat_id': group_info[1],
+            'description': group_info[2],
         }
 
     @staticmethod
-    def create_group(chat_id: int) -> 'Group':
+    def create_group(chat_id: int, description: str) -> 'Group':
         db_path = path.join(Group.data_path, f'{chat_id}.db')
 
         if path.exists(db_path):
             raise ValueError(f'Path \'{db_path}\' already exists')
 
         connection = connect(db_path)
-        Group._init_database(connection, chat_id)
+        Group._init_database(connection, chat_id, description)
 
         return Group(connection=connection)
 
@@ -244,9 +245,10 @@ class Group:
         return feedback, "All good"
 
     @staticmethod
-    def _init_database(connection: Connection, chat_id: int) -> None:
+    def _init_database(connection: Connection, chat_id: int, description: str) -> None:
         connection.execute('CREATE TABLE IF NOT EXISTS group_info ('
                            'id INTEGER PRIMARY KEY,'
+                           'description TEXT,'
                            'tg_id INTEGER)')
         connection.execute('CREATE TABLE IF NOT EXISTS members('
                            'id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'
@@ -280,6 +282,6 @@ class Group:
                            'FOREIGN KEY (poll_id) REFERENCES polls(id),'
                            'FOREIGN KEY (poll_option_id) REFERENCES poll_options(id))')
 
-        connection.execute('INSERT INTO group_info (id, tg_id) VALUES (0, ?)',
-                           (chat_id,))
+        connection.execute('INSERT INTO group_info (id, tg_id, description) VALUES (0, ?, ?)',
+                           (chat_id,description))
         connection.commit()
