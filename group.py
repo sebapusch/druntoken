@@ -56,6 +56,9 @@ class Group:
 
         return True
 
+    def all_in(self, tg_user_id: int) -> int:
+        return self.get_tokens(tg_user_id)
+
     def get_tokens(self, tg_id: int) -> int | None:
         member = self.connection.execute(
             'SELECT tokens FROM members WHERE tg_id = ?',

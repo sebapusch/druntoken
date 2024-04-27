@@ -135,7 +135,11 @@ async def bet(update: Update, _: CallbackContext) -> None:
     tg_message_id = poll_message.id
     group = Group(tg_chat_id=tg_chat_id)
     try:
-        amount = int(update.effective_message.text.replace('/bet', '').strip())
+        amount_str = update.effective_message.text.replace('/bet', '').strip()
+        if amount_str == 'all-in':
+            amount = group.all_in(update.effective_user.id)
+        else:
+            amount = int(amount_str)
     except:
         await update.message.reply_text(
             await generate_error_message(AsyncOpenAI(), 'Inserendo un valore non numerico'))
