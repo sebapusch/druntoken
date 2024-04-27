@@ -195,8 +195,10 @@ async def close(update: Update, _: CallbackContext) -> None:
 
     msg = ''
     for res in result:
+        win = res['win']
+        tk = res['token']
         verb = 'ha vinto' if res['win'] > 0 else 'ha perso'
-        msg += f'{res["member_name"]} {verb} {math.fabs(res['win']):0} token. {res['tokens']} tokens rimanenti.\n'
+        msg += f'{res["member_name"]} {verb} {math.fabs(win):0} token. {tk} tokens rimanenti.\n'
 
     await update.message.reply_text(await generate_poll_message(AsyncOpenAI(), result, msg))
 
