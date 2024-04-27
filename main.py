@@ -35,7 +35,7 @@ def join_button() -> InlineKeyboardMarkup:
 
 async def create(update: Update, _: CallbackContext):
     try:
-        Group.create_group(update.effective_chat.id)
+        Group.create_group(update.effective_chat.id, '')
     except ValueError as e:
         await update.message.reply_text(f'Errore durante la creazione del gruppo: {e}')
         return
@@ -105,7 +105,7 @@ async def generate_error_message(client: AsyncOpenAI, error: str) -> str:
     response = await client.chat.completions.create(
         messages=[{
             'role': 'system',
-            'content': f'Un utente ha provato a rompere l\'applicativo nel seguente modo: {error}. Sgridalo in modo ridicolo e fagli capire l\'errore.',
+            'content': f'Un utente ha provato a rompere l\'applicativo nel seguente modo: {error}. Sgridalo in modo ridicolo e fagli capire l\'errore. Accusalo in modo esagerato di razzismo, fascimo, misoginia o simili.',
         }],
         model="gpt-3.5-turbo-0125",
     )
