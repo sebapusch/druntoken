@@ -44,7 +44,7 @@ def bot(application: Application, data_path: str, prompt_path: str) -> None:
                 await update.message.reply_text(
                     await prompter.prompt(
                         'error',
-                        {'error': 'Cercando di andare all-in nonostante non abbia più token.'}
+                        {'error': 'Cercando di andare all-in nonostante non abbia più token'}
                     ))
                 return None
         else:
@@ -62,7 +62,7 @@ def bot(application: Application, data_path: str, prompt_path: str) -> None:
             await update.message.reply_text(
                 await prompter.prompt(
                     'error',
-                    {'error': 'Inserendo un numero di token minore o uguale a zero.'}
+                    {'error': 'Inserendo un numero di token minore o uguale a zero'}
                 ))
             return None
 
@@ -204,7 +204,9 @@ def bot(application: Application, data_path: str, prompt_path: str) -> None:
         result, message = group.close_poll(tg_poll_id, int(correct_option_index))
 
         outcome = ', '.join([
-            res['member_name'] + ' ha vinto ' if res['win'] else ' has perso ' + str(math.fabs(res['win'])) + ' token'
+            res['member_name'] +
+            (' ha vinto ' if res['win'] > 0 else ' ha perso ') +
+            str(int(math.fabs(res['win']))) + ' token'
             for res in result
         ])
 

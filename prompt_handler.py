@@ -23,7 +23,9 @@ class PromptHandler:
         prompt = self._prompts[key]
         if values is not None:
             for k in values:
-                prompt.replace('{' + k + '}', values[k].strip())
+                prompt = prompt.replace('{' + k + '}', values[k]).strip()
+
+        print(prompt)
 
         try:
             response = await self._client.chat.completions.create(
