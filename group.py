@@ -2,6 +2,7 @@ import math
 import os
 from os import path
 from sqlite3 import Connection, connect
+from typing import Optional
 
 from errors.bet_error import BetError
 from dtypes import GroupInfo, BetResult
@@ -180,6 +181,20 @@ class Group:
         self.connection.commit()
 
         return cursor.lastrowid
+
+    def get_poll(self, tg_poll_id: int) -> Optional[dict]:
+        res = self.connection.execute(
+            'SELECT text FROM polls WHERE tg_poll_id = ?'
+            , (tg_poll_id,)
+        ).fetchone()
+
+        if res is None:
+            return None
+
+        return {
+            'text': res[0],
+        }
+
 
     def close_poll(self, tg_poll_id: int, correct_tg_index: int) -> (list[BetResult], str):
         bets = self.connection.execute(
