@@ -141,11 +141,11 @@ def bot(application: Application, data_path: str, prompt_path: str) -> None:
 
     async def generate(update: Update, context: CallbackContext) -> None:
         chat_id = update.effective_chat.id
-
         group = Group(tg_chat_id=chat_id)
-        generator = PollGenerator(group)
-        suggestion = clean(update, 'generate') or None
-        generated = await generator.generate(prompter, suggestion)
+
+        generated = await prompter.json_prompt('generate', {
+            'suggestion': clean(update, 'generate') or None
+        })
         message = await context.bot.send_poll(
             is_anonymous=False,
             chat_id=chat_id,
