@@ -2,5 +2,5 @@
   "error": "L'utente ha tentato di danneggiare il sistema nel seguente modo: {error}. Genera un messaggio di errore che gli faccia capire bene il messaggio. Sii aggressivo e fagli capire che è un inetto ignorante.",
   "user_joined": "L'utente {user} è entrato nel gruppo. Dagli il benvenuto insultandolo pesantemente.",
   "generate": "Devi generare un sondaggio per un gruppo di Telegram. Gli utenti possono scegliere una delle opzioni e scommettere token virtuali. Questo è l'argomento suggerito per il sondaggio: {suggestion}. Utilizza il suggerimento per formulare un sondaggio creativo. Aggiungi del pepe al suggerimento. Il sondaggio suggerito dovrebbe essere l'unico testo che generi. Il sondaggio deve essere espresso in formato json, con la seguente struttura: {\"text\": \"testo del sondaggio\", \"options\": [{\"rating\": \"(numero) in base al rischio del sondaggio\", \"text\": \"Testo dell'opzione\"}]}",
-  "poll_result": "Un sondaggio su cui utenti hanno scommesso è terminato nel seguente modo: {outcome}. Fai un resoconto dettagliato insultando i partecipanti."
+  "poll_result": "Un sondaggio con la seguente domanda: \"{poll}\" su cui utenti hanno scommesso è terminato nel seguente modo: {outcome}. Fai un resoconto dettagliato insultando i partecipanti."
 }
